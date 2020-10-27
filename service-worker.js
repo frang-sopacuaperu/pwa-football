@@ -1,4 +1,4 @@
-const CACHE_NAME = "pwa-football-v1.5";
+const CACHE_NAME = "pwa-football-v1.6";
 var urlsToCache = [
   "/",
   "/nav.html",
@@ -12,6 +12,7 @@ var urlsToCache = [
   "/js/materialize.min.js",
   "/js/nav.js",
   "/js/api.js",
+  "/js/sw-register.js",
 ];
 
 self.addEventListener("install", (event) => {

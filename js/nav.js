@@ -47,9 +47,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (page === "home") {
           getStandings();
-        } else if (page === "saved") {
-          getSavedStandings();
         }
+        // else if (page === "saved") {
+        //   getSavedStandings();
+        // }
 
         if (this.status === 200) {
           content.innerHTML = xhttp.responseText;
