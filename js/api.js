@@ -24,19 +24,47 @@ function getStandings() {
       if (response) {
         response.json().then((data) => {
           var standingsHTML = "";
-          data.result.forEach((team) => {
+          data.standings[0].table.forEach((standing) => {
             standingsHTML += `
-                <div class="card">
-                  <a href="./standing.html?id=${team.team.id}">
-                      <div class="card-image waves-effect waves-block waves-light">
-                          <img src="${team.team.crestUrl}" />
-                      </div>
-                  </a>
-                  <div class="card-content">
-                      <span class="card-title truncate">${team.team.name}</span>
-                      <p>${team.playedGames}</p>
-                  </div>
-                </div>
+            <div class="card">
+            <table class="centered highlight responsive-table">
+                <thead>
+                  <tr>
+                      <th>Team Logo</th>
+                      <th>Name</th>
+                      <th>Played</th>
+                      <th>Form</th>
+                      <th>Won</th>
+                      <th>Draw</th>
+                      <th>Lost</th>
+                      <th>Points</th>
+                      <th>Goals For</th>
+                      <th>Goals Against</th>
+                      <th>Goals Diff.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>
+                      <a href="./standing.html?id=${standing.team.id}">
+                      <img src="${standing.team.crestUrl.replace(
+                        /^http:\/\//i,
+                        "https://"
+                      )}" width="30px" alt="badge"></td> </a>
+                      <td>${standing.team.name}</td>
+                      <td>${standing.playedGames}</td>
+                      <td>${standing.form}</td>
+                      <td>${standing.won}</td>
+                      <td>${standing.draw}</td>
+                      <td>${standing.lost}</td>
+                      <td>${standing.points}</td>
+                      <td>${standing.goalsFor}</td>
+                      <td>${standing.goalsAgainst}</td>
+                      <td>${standing.goalDifference}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
             `;
           });
           document.getElementById("standings").innerHTML = standingsHTML;
@@ -54,46 +82,47 @@ function getStandings() {
     .then(json)
     .then((data) => {
       var standingsHTML = "";
-      data.result.forEach((team) => {
+      data.standings[0].table.forEach((standing) => {
         standingsHTML += `
-                <div class="card">
-                  <a href="./standing.html?id=${team.team.id}">
-                      <div class="card-image waves-effect waves-block waves-light">
-                          <img src="${team.team.crestUrl}" />
-                      </div>
-                  </a>
-                  <div class="card-content">
-                      <span class="card-title truncate">${team.team.name}</span>
-                      <p>${team.playedGames}</p>
-                  </div>
-                </div>
+                <table class="centered highlight responsive-table">
+                <thead>
+                  <tr>
+                      <th>Team Logo</th>
+                      <th>Name</th>
+                      <th>Played</th>
+                      <th>Form</th>
+                      <th>Won</th>
+                      <th>Draw</th>
+                      <th>Lost</th>
+                      <th>Points</th>
+                      <th>Goals For</th>
+                      <th>Goals Against</th>
+                      <th>Goals Diff.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>
+                      <a href="./standing.html?id=${standing.team.id}">
+                      <img src="${standing.team.crestUrl.replace(
+                        /^http:\/\//i,
+                        "https://"
+                      )}" width="30px" alt="badge"></td> </a>
+                      <td>${standing.team.name}</td>
+                      <td>${standing.playedGames}</td>
+                      <td>${standing.form}</td>
+                      <td>${standing.won}</td>
+                      <td>${standing.draw}</td>
+                      <td>${standing.lost}</td>
+                      <td>${standing.points}</td>
+                      <td>${standing.goalsFor}</td>
+                      <td>${standing.goalsAgainst}</td>
+                      <td>${standing.goalDifference}</td>
+                    </tr>
+                </tbody>
             `;
       });
       document.getElementById("standings").innerHTML = standingsHTML;
     })
     .catch(error);
-}
-
-function getTeamById() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
-
-  fetch(`${base_url}standing/${idParam}`)
-    .then(status)
-    .then(json)
-    .then((data) => {
-      console.log(data);
-      var teamHTML = `
-          <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-            <img src="${team.crestUrl}" />
-            </div>
-            <div class="card-content">
-              <span class="card-title">${data.result.name}</span>
-              ${snarkdown(data.result.playedGames)}
-            </div>
-          </div>
-        `;
-      document.getElementById("body-content").innerHTML = teamHTML;
-    });
 }
